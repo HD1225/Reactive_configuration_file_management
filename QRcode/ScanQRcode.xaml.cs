@@ -1,29 +1,21 @@
-﻿using Logic;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Xml.Linq;
 using WPFMediaKit.DirectShow.Controls;
 using ZXing;
 
 namespace QRcode
 {
     /// <summary>
-    /// ScanQRcode.xaml 的交互逻辑
+    /// The interaction logic of ScanQRcode.xaml
     /// </summary>
     public partial class ScanQRcode : Window
     {
@@ -31,6 +23,8 @@ namespace QRcode
         //FilterInfoCollection filterInfoCollection;
 
         BarcodeReader codeReader = new BarcodeReader();
+        //QRCodeDecoder decoder = new QRCodeDecoder();
+        OpenFileDialog openFileDialog = new OpenFileDialog();
 
         /// <summary>
         /// Minuteur
@@ -53,7 +47,7 @@ namespace QRcode
             set;
         }
         /// <summary>
-        /// Méthode de la minuterie
+        /// Timer method
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -69,10 +63,10 @@ namespace QRcode
             {
                 encoder.Save(ms);
                 Bitmap btiMap = new Bitmap(ms);
-                var result = codeReader.Decode(btiMap);//Analyser le code-barres
+                var result = codeReader.Decode(btiMap);
                 if (result != null)
                 {
-                    // 1:Arrêter la reconnaissance
+                    // Stop recognition
                     cameraTimer.Stop();
                     vce.Play();
                     MessageBox.Show($"Le contenu d'identification est：{result}");
@@ -92,7 +86,7 @@ namespace QRcode
         }
 
         /// <summary>
-        /// Convertir de bitmap en ImageSource
+        /// Convert bitmap to ImageSource
         /// </summary>
         /// <param name="icon"></param>
         /// <returns></returns>
@@ -125,11 +119,25 @@ namespace QRcode
             var camera = cb.SelectedItem.ToString(); ;
             if (MultimediaUtil.VideoInputNames.Contains(camera))
             {
-                //Contrôler le développement de la caméra
+                //Control the development of the camera
                 vce.VideoCaptureSource = camera;
                 cameraTimer.IsEnabled = false;
                 cameraTimer.Interval = new TimeSpan(200); 
                 cameraTimer.Tick += cameraTimer_Tick;
+            }
+        }
+
+        private void btnScan_Click(object sender, RoutedEventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == true)
+            {
+                BarcodeReader reader = new BarcodeReader { AutoRotate = true };
+                Result result = reader.Decode(new Bitmap(openFileDialog.FileName));
+                if (result != null)
+                {
+                    string decoded = result.ToString().Trim();
+                    textQR.Text = decoded;
+                }
             }
         }
     }

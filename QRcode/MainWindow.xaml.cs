@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace QRcode
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Interaction logic of MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -39,7 +39,7 @@ namespace QRcode
 
         private void btn_CreateQR(object sender, RoutedEventArgs e)
         {
-            ScanQRcode gocreate = new ScanQRcode(qrcode);
+            CreateQRcode gocreate = new CreateQRcode(qrcode);
             gocreate.Show();
         }
 

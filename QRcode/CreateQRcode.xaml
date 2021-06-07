@@ -4,12 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QRcode"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="CreateQRcode" Height="450" Width="800">
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="32" Margin="288,10,0,0" TextWrapping="Wrap" Text="Create QR" VerticalAlignment="Top" Width="151"/>
-        <TextBox HorizontalAlignment="Left" Height="178" Margin="146,56,0,0" TextWrapping="Wrap" Text="Enter text : " VerticalAlignment="Top" Width="470"/>
-        <Button Content="Button" HorizontalAlignment="Left" Height="28" Margin="616,279,0,0" VerticalAlignment="Top" Width="99" Click="Button_Click"/>
+        Title="CreateQRcode" Height="710.4" Width="605.6">
+    <Grid Margin="0,0,3.2,1">
+        <Label HorizontalAlignment="Left" Height="42" Margin="227,0,0,0" VerticalAlignment="Top" Width="151" FontSize="24" FontWeight="Bold" FontStyle="Italic" Content="Create QR"/>
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Label Margin="10,47,444.6,174.6" FontSize="14" FontWeight="Bold" Content="Enter text :"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <TextBox x:Name="textBlock" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="178" Margin="126,47,0,0" VerticalAlignment="Top" Width="415"/>
+            </ScrollViewer>
+        </Grid>
+        <Button Content="Create" HorizontalAlignment="Left" Height="28" Margin="442,257,0,0" VerticalAlignment="Top" Width="99" Click="Create_Click"/>
+        <Image x:Name="pictureBox" HorizontalAlignment="Left" Height="286" Margin="130,306,0,0" VerticalAlignment="Top" Width="332"/>
+        <Button Content="Save" HorizontalAlignment="Left" Height="30" Margin="442,640,0,0" VerticalAlignment="Top" Width="99" Click="Save_Click"/>
+        <Button Content="Remove spaces" HorizontalAlignment="Left" Height="28" Margin="42,257,0,0" VerticalAlignment="Top" Width="146" Click="Removespaces_Click"/>
+        <Button x:Name="btn_json" Content="Convert to json" HorizontalAlignment="Left" Height="28" Margin="244,257,0,0" VerticalAlignment="Top" Width="134" Click="Convert_to_json_Click"/>
 
     </Grid>
 </Window>
