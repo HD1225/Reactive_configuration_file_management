@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:QRcode"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="CreateQRcode" Height="710.4" Width="605.6">
-    <Grid Margin="0,0,3.2,1">
+        Title="CreateQRcode" Height="852" Width="605.6">
+    <Grid Margin="0,0,3.2,0" Height="821" VerticalAlignment="Top" HorizontalAlignment="Right" Width="596">
         <Label HorizontalAlignment="Left" Height="42" Margin="227,0,0,0" VerticalAlignment="Top" Width="151" FontSize="24" FontWeight="Bold" FontStyle="Italic" Content="Create QR"/>
         <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
             <Label Margin="10,47,444.6,174.6" FontSize="14" FontWeight="Bold" Content="Enter text :"/>
@@ -15,11 +15,80 @@
                 <TextBox x:Name="textBlock" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="178" Margin="126,47,0,0" VerticalAlignment="Top" Width="415"/>
             </ScrollViewer>
         </Grid>
-        <Button Content="Create" HorizontalAlignment="Left" Height="28" Margin="442,257,0,0" VerticalAlignment="Top" Width="99" Click="Create_Click"/>
+        <Button Content="Create" HorizontalAlignment="Left" Height="28" Margin="130,701,0,0" VerticalAlignment="Top" Width="99" Click="Create_Click" FontWeight="Bold"/>
         <Image x:Name="pictureBox" HorizontalAlignment="Left" Height="286" Margin="130,306,0,0" VerticalAlignment="Top" Width="332"/>
-        <Button Content="Save" HorizontalAlignment="Left" Height="30" Margin="442,640,0,0" VerticalAlignment="Top" Width="99" Click="Save_Click"/>
-        <Button Content="Remove spaces" HorizontalAlignment="Left" Height="28" Margin="42,257,0,0" VerticalAlignment="Top" Width="146" Click="Removespaces_Click"/>
-        <Button x:Name="btn_json" Content="Convert to json" HorizontalAlignment="Left" Height="28" Margin="244,257,0,0" VerticalAlignment="Top" Width="134" Click="Convert_to_json_Click"/>
+        <Button Content="Save" HorizontalAlignment="Left" Height="30" Margin="363,699,0,0" VerticalAlignment="Top" Width="99" Click="Save_Click" FontWeight="Bold"/>
+        <Button Content="Remove spaces" HorizontalAlignment="Left" Height="28" Margin="83,253,0,0" VerticalAlignment="Top" Width="146" Click="Removespaces_Click" FontWeight="Bold"/>
+        <Button x:Name="btn_json" Content="Convert to json" HorizontalAlignment="Left" Height="28" Margin="279,253,0,0" VerticalAlignment="Top" Width="134" Click="Convert_to_json_Click" FontWeight="Bold"/>
+
+        <!--<Label Content="Encoding :" HorizontalAlignment="Left" Height="28" Margin="62,631,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" FontSize="14"/>
+        <ComboBox  x:Name="combobox1_encoding" HorizontalAlignment="Left" Height="27" Margin="147,632,0,0" VerticalAlignment="Top" Width="117">
+            <ComboBoxItem>Numeric</ComboBoxItem>
+            <ComboBoxItem>AlphaNumeric</ComboBoxItem>
+            <ComboBoxItem IsSelected="True">Byte</ComboBoxItem>
+            <ComboBoxItem>Kanji</ComboBoxItem>
+        </ComboBox>-->
+
+        <Label Content="Version :" HorizontalAlignment="Left" Height="28" Margin="323,632,0,0" VerticalAlignment="Top" Width="80" FontWeight="Bold" FontSize="14"/>
+        <ComboBox x:Name="combobox1_version" HorizontalAlignment="Left" Height="27" Margin="403,631,0,0" VerticalAlignment="Top" Width="99">
+            <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>7</ComboBoxItem>
+            <ComboBoxItem>8</ComboBoxItem>
+            <ComboBoxItem>9</ComboBoxItem>
+            <ComboBoxItem>10</ComboBoxItem>
+            <ComboBoxItem>11</ComboBoxItem>
+            <ComboBoxItem>12</ComboBoxItem>
+            <ComboBoxItem>13</ComboBoxItem>
+            <ComboBoxItem>14</ComboBoxItem>
+            <ComboBoxItem>15</ComboBoxItem>
+            <ComboBoxItem>16</ComboBoxItem>
+            <ComboBoxItem>17</ComboBoxItem>
+            <ComboBoxItem>18</ComboBoxItem>
+            <ComboBoxItem>19</ComboBoxItem>
+            <ComboBoxItem>20</ComboBoxItem>
+            <ComboBoxItem>21</ComboBoxItem>
+            <ComboBoxItem>22</ComboBoxItem>
+            <ComboBoxItem>23</ComboBoxItem>
+            <ComboBoxItem>24</ComboBoxItem>
+            <ComboBoxItem>25</ComboBoxItem>
+            <ComboBoxItem>26</ComboBoxItem>
+            <ComboBoxItem>27</ComboBoxItem>
+            <ComboBoxItem>28</ComboBoxItem>
+            <ComboBoxItem>29</ComboBoxItem>
+            <ComboBoxItem>30</ComboBoxItem>
+            <ComboBoxItem>31</ComboBoxItem>
+            <ComboBoxItem>32</ComboBoxItem>
+            <ComboBoxItem>33</ComboBoxItem>
+            <ComboBoxItem>34</ComboBoxItem>
+            <ComboBoxItem>35</ComboBoxItem>
+            <ComboBoxItem>36</ComboBoxItem>
+            <ComboBoxItem>37</ComboBoxItem>
+            <ComboBoxItem>38</ComboBoxItem>
+            <ComboBoxItem>39</ComboBoxItem>
+            <ComboBoxItem>40</ComboBoxItem>
+        </ComboBox>
+
+
+        <!--<Label Content="Size : " HorizontalAlignment="Left" Margin="295,621,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Width="83" RenderTransformOrigin="-0.058,0.587"/>
+        <ComboBox x:Name="combobox2_size" IsEditable="True" Margin="383,619,43,141" RenderTransformOrigin="0.625,0.058">
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+        </ComboBox>
+        
+        <Label Content="CorrectionLevel :" HorizontalAlignment="Left" Margin="295,671,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Width="135"/>
+        <ComboBox x:Name="combobox4_correctionlevel" IsEditable="True" Margin="423,671,43,89">
+            <ComboBoxItem Content="L"/>
+            <ComboBoxItem Content="M"/>
+            <ComboBoxItem Content="Q"/>
+            <ComboBoxItem Content="H"/>
+        </ComboBox>-->
 
     </Grid>
 </Window>

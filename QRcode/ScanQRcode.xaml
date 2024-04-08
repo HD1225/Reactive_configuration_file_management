@@ -7,7 +7,7 @@
         xmlns:wpfmedia="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
         xmlns:materilDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ScanQRcode" Height="478.683" Width="1040.864">
+        Title="ScanQRcode" Height="609.483" Width="1040.864">
     <Grid Margin="0,0,3.4,-2.2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="86*"/>
@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Background="LightBlue" Grid.Row="0" Grid.ColumnSpan="2" Margin="31,86,579.2,25.2" Grid.RowSpan="2">
+        <StackPanel Background="LightBlue" Grid.Row="0" Grid.ColumnSpan="2" Margin="31,191,579.2,43.2" Grid.RowSpan="2">
             <wpfmedia:VideoCaptureElement x:Name="vce" Stretch="Fill" Width="auto" Height="auto" Margin="0" Grid.Row="0" RenderTransformOrigin="0.5,0.5">
                 <wpfmedia:VideoCaptureElement.RenderTransform>
                     <TransformGroup>
@@ -30,15 +30,15 @@
             </wpfmedia:VideoCaptureElement>
         </StackPanel>
 
-        <Label x:Name="label1" Content="Open Camera：" Grid.Column="0"  Width="142" HorizontalAlignment="Right" Margin="0,10,101.4,265.4" FontSize="18" FontWeight="Bold" />
-        <ComboBox x:Name="cb" Width="204" HorizontalAlignment="Left" Margin="223,10,0,265.4" SelectionChanged="cb_SelectionChanged" Grid.ColumnSpan="2" Height="47"  />
-        <Button  Content="Start" x:Name="btn_start" Click="Start_Click"  Width="68" Grid.Row="2" Height="Auto" HorizontalAlignment="Left" Margin="93,9.8,0,27.2" RenderTransformOrigin="-0.357,0.918"/>
-        <Button  Content="Stop" x:Name="btn_reStart" Click="Restart_Click" Width="78" Grid.Row="2" Grid.Column="1" Height="Auto" HorizontalAlignment="Left" Margin="28.6,9.8,0,28.2" RenderTransformOrigin="0.842,0.556"/>
+        <Label x:Name="label1" Content="Open Camera：" Grid.Column="0"  Width="142" HorizontalAlignment="Right" Margin="0,99,101.4,283" FontSize="18" FontWeight="Bold" />
+        <ComboBox x:Name="cb" Width="204" HorizontalAlignment="Left" Margin="248,86,0,283" SelectionChanged="cb_SelectionChanged" Grid.ColumnSpan="2" Height="47"  />
+        <Button  Content="Start" x:Name="btn_start" Click="Start_Click"  Width="68" Grid.Row="2" Height="Auto" HorizontalAlignment="Left" Margin="93,9.8,0,27.2" RenderTransformOrigin="-0.357,0.918" FontWeight="Bold"/>
+        <Button  Content="Stop" x:Name="btn_reStart" Click="Restart_Click" Width="78" Grid.Row="2" Grid.Column="1" Height="Auto" HorizontalAlignment="Left" Margin="28.6,9.8,0,28.2" RenderTransformOrigin="0.842,0.556" FontWeight="Bold"/>
 
-        <Label x:Name="label2" Content="Scan by inserting a picture：" Grid.Column="1"  Width="263" HorizontalAlignment="Right" Margin="0,25,181.5,250.5" FontWeight="Bold" FontSize="18"/>
-        <StackPanel Margin="312.6,86,38.2,25.2" Grid.Column="1" Grid.RowSpan="2">
+        <Label x:Name="label2" Content="Scan by inserting a picture：" Grid.Column="1"  Width="263" HorizontalAlignment="Right" Margin="0,99,181.2,277" FontWeight="Bold" FontSize="18"/>
+        <StackPanel Margin="312.6,177,38.2,43.2" Grid.Column="1" Grid.RowSpan="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Margin="0,10" FontSize="16" x:Name="textQR" Height="313" RenderTransformOrigin="0.5,0.5">
+                <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Margin="0,10" FontSize="16" x:Name="textQR" Height="268" RenderTransformOrigin="0.5,0.5">
                     <TextBox.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -50,10 +50,14 @@
                 </TextBox>
             </ScrollViewer>
         </StackPanel>
-        <Button x:Name="btnScan" Click="btnScan_Click"  Margin="627,26,38.5,265.5" Grid.Column="1" >
+        <Button x:Name="btnScan" Click="btnSelect_Click"  Margin="627.6,101,38.2,277" Grid.Column="1" Height="Auto" >
             <StackPanel>
-                <TextBlock Text="Select"/>
+                <TextBlock Text="Select" FontWeight="Bold"/>
             </StackPanel>
         </Button>
+        <Label Content="Scan QR" Grid.Column="1" HorizontalAlignment="Left" Height="44" Margin="178.6,10,0,0" VerticalAlignment="Top" Width="137" FontSize="24" FontStyle="Italic" FontWeight="Bold"/>
+        <Button  Content="Save" x:Name="btn_save" Click="Save_Click" Width="78" Grid.Row="2" Grid.Column="1" Height="Auto" HorizontalAlignment="Left" Margin="338.6,9.8,0,28.4" RenderTransformOrigin="0.842,0.556" FontWeight="Bold"/>
+        <Button  Content="Cartridge" x:Name="btn_Cartridge" Click="Cartridge_Click" Width="103" Grid.Row="2" Grid.Column="1" Height="Auto" HorizontalAlignment="Left" Margin="590.6,9.8,0,27.4" RenderTransformOrigin="0.842,0.556" FontWeight="Bold"/>
+
     </Grid>
 </Window>

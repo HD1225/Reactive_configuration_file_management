@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using System.Xml;
 using WPFMediaKit.DirectShow.Controls;
 using ZXing;
 
@@ -27,25 +29,31 @@ namespace QRcode
         OpenFileDialog openFileDialog = new OpenFileDialog();
 
         /// <summary>
-        /// Minuteur
+        /// Timer
         /// </summary>
         DispatcherTimer cameraTimer = new DispatcherTimer();
-        private Logic.QRcode qrcode;
+        
+        private ScanQRcode qrcode;
 
-        public ScanQRcode(Logic.QRcode qrcode)
+        public ScanQRcode(ScanQRcode scanQRcode)
         {
             InitializeComponent();
-            this.qrcode = qrcode;
-            CameraList = MultimediaUtil.VideoInputNames.ToList();
+            this.qrcode = scanQRcode;
 
+            //Get the camera list
+            CameraList = MultimediaUtil.VideoInputNames.ToList();
             cb.ItemsSource = CameraList;
         }
 
+        /// <summary>
+        /// Get the camera list
+        /// </summary>
         public List<string> CameraList
         {
             get;
             set;
         }
+
         /// <summary>
         /// Timer method
         /// </summary>
@@ -66,23 +74,32 @@ namespace QRcode
                 var result = codeReader.Decode(btiMap);
                 if (result != null)
                 {
-                    // Stop recognition
+                    //Stop recognition
                     cameraTimer.Stop();
                     vce.Play();
                     MessageBox.Show($"Le contenu d'identification est：{result}");
-
                 }
             }
         }
 
+        /// <summary>
+        /// Click the "start" button to scan the QR code
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Start_Click(object sender, RoutedEventArgs e)
         {
             cameraTimer.Start();
         }
 
+        /// <summary>
+        /// Click the "stop" button to scan the QR code
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
-            cameraTimer.Start();
+            cameraTimer.Stop();
         }
 
         /// <summary>
@@ -112,7 +129,6 @@ namespace QRcode
             throw new NotImplementedException();
         }
 
-
         private void cb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -127,7 +143,12 @@ namespace QRcode
             }
         }
 
-        private void btnScan_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Select the QR code to be scanned
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSelect_Click(object sender, RoutedEventArgs e)
         {
             if (openFileDialog.ShowDialog() == true)
             {
@@ -136,9 +157,104 @@ namespace QRcode
                 if (result != null)
                 {
                     string decoded = result.ToString().Trim();
+                    //Display scan results in TextBox
                     textQR.Text = decoded;
                 }
             }
         }
+
+        /// <summary>
+        /// Parse the string obtained after scanning the QR code and save it in the corresponding text format
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            string str1 = textQR.Text;
+            str1 = str1.Trim();
+            
+            try
+            {
+                //If it is xml, the default save format is xml
+                XmlDocument xdoc = new XmlDocument();            
+                xdoc.LoadXml(textQR.Text);
+                save.Filter = "XML File ( *.xml)|*.xml|JSON File ( *.json)|*.json|TEXT File ( *.txt)|*.txt";
+                if (save.ShowDialog() == true)
+                {
+                    //Console.WriteLine(save.FilterIndex);
+                    if(save.FilterIndex == 2)
+                    {
+                        string jsonText = JsonConvert.SerializeXmlNode(xdoc);
+                        File.WriteAllText(save.FileName, jsonText);
+                    }
+                    else
+                    {
+                        xdoc.Save(save.FileName);
+                    }                                   
+                }
+            }
+            catch
+            {
+                try
+                {
+                    //If it is json, the default save format is json
+                    JsonConvert.SerializeObject(str1);
+                    save.Filter = "JSON File ( *.json)|*.json|XML File ( *.xml)|*.xml|TEXT File ( *.txt)|*.txt";
+                    if (save.ShowDialog() == true)
+                    {    
+                        if(save.FilterIndex == 2)
+                        {
+                            XmlDocument xmlText = JsonConvert.DeserializeXmlNode(str1);
+                            xmlText.Save(save.FileName);
+                        }
+                        else
+                        {
+                            File.WriteAllText(save.FileName, str1);
+                        }                        
+                    }
+                }
+                catch
+                {
+                    //The rest are saved in text format
+                    save.Filter = "TEXT File ( *.txt)|*.txt";
+                    if (save.ShowDialog() == true)                        
+                    {                       
+                        File.WriteAllText(save.FileName, str1);
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Create and display the Cartridge window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Cartridge_Click(object sender, RoutedEventArgs e)
+        {
+            //Declare json string
+            string jsonStr;
+            try
+            {
+                //Try to parse it in XML and convert it to JSON
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.LoadXml(textQR.Text);
+                jsonStr = JsonConvert.SerializeXmlNode(xdoc);
+            }
+            catch
+            {
+                //If it fails, it means that it was originally json, so assign it directly
+                jsonStr = textQR.Text;
+            }
+            //Remove the'@' symbol and parse the json
+            MyDataFrame data = JsonConvert.DeserializeObject<MyDataFrame>(jsonStr.Replace("@",""));
+            //Create a new window and pass data to the window
+            Cartridge cartridgeWindow = new Cartridge(data);
+            //Show window
+            cartridgeWindow.ShowDialog();
+        }
+
     }
 }
